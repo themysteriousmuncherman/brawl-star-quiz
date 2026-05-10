@@ -1,31 +1,39 @@
-import requests
+print("Hello, welcome to my brawl stars game show!")
+print("We will start our game show with some easy questions...then some hard ones!!!")
 
-url = "https://brawlstarsapi.p.rapidapi.com/brawlers"
+def ask_question(question, answer):
+    user_answer = input(f"{question} ").strip().lower()
+    if user_answer == answer.lower():
+        print("Nice, that's correct!")
+        return 1 
+    else:
+        print(f"Not quite, the answer was {answer}.")
+        return 0 
+def show_score(user_score, total_questions):
+    percentage = (user_score / total_questions) * 100
+    print(f"The game show is over. Your total score was {percentage}%")
 
-headers = {
-	"x-rapidapi-key": "753e27db50msh9fe97b423205deap191643jsn9766ce6def38",
-	"x-rapidapi-host": "brawlstarsapi.p.rapidapi.com",
-	"Content-Type": "application/json"
-}
+def rundaquiz():
+    score = 0
+    questions = [
+        ("What is the starter brawler?", "Shelly"),
+        ("What is the MOST no skill brawler in the game", "Edgar"),
+        ("What brawler was just recently released?", "Damian"),
+        ("What brawler starts with the letter L and has the star power Spiky?", "Lily"),
+        ("Which limited time brawler came into the game during late 2024 and early 2025?", "Buzz Lightyear"),
+        ("Does Ethan have more trophies than me in brawl stars, yes/no?", "Yes"),
+        ("What brawler just recently got his gadget removed? (Hint, it helped him charge his gadget)", "Edgar"),
+        ("Who is the best support brawler in the game? (Hint, it is a mythic brawler)", "Doug"),
+        ("What brawler gives the title, Bro (Hint, its a legendary brawler)", "Surge"),
+        ("Final Question, what title does prestige one bibi give ", "Cool Cat")
+    ]
+    
+    total = len(questions)
+    
+    for q, a in questions:
+        score += ask_question(q, a)
+        
+    show_score(score, total)
 
-response = requests.get(url, headers=headers)
 
-
-
-print(response.json())
-
-
-data = response.json()
-
-
-choice = input("What brawler would you like to learn about? ")
-
-
-for i in data:
-    if i["name"].lower() == choice.lower():
-        print(f"Brawler: {i['name']}")
-        print(f"1st Star Power: {i['1st star power']}")
-        print(f"2nd Star Power: {i['2nd star power']}")
-        print(f"1st Gadget: {i['1st gadget']}")
-        print(f"2nd Gadget: {i['2nd gadget']}")
-
+rundaquiz()
